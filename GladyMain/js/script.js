@@ -1,9 +1,14 @@
 // Получаем элементы DOM
-const modal = document.getElementById('modal');
-const closeBtn = document.querySelector('.close');
-const buyButtons = document.querySelectorAll('.buy-btn');
-const selectedPackage = document.getElementById('selected-package');
-const paymentForm = document.getElementById('payment-form');
+document.addEventListener('DOMContentLoaded', function() {
+    // Элементы модального окна
+    const modal = document.getElementById('modal');
+    const closeBtn = document.querySelector('.close');
+    const selectedPackage = document.getElementById('selected-package');
+    const buyButtons = document.querySelectorAll('.buy-btn');
+
+    // Открытие модального окна при нажатии на кнопку «Купить»
+    buyButtons.forEach(button => {
+        button.addEventListener('click', function() {
 
 // Открываем модальное окно при нажатии на кнопку «Купить»
 buyButtons.forEach(button => {
