@@ -1,0 +1,416 @@
+/* Базовые стили и сброс */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Шапка */
+.header {
+  text-align: center;
+  padding: 2rem 0;
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.header h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, #ff8a00, #e52e71);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* Герой-секция */
+.hero {
+  text-align: center;
+  padding: 3rem 0;
+  color: white;
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* Сетка тарифов */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+/* Карточки */
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.card.popular {
+  border: 2px solid #ff8a00;
+  transform: scale(1.05);
+}
+
+.card.popular:hover {
+  transform: scale(1.07) translateY(-10px);
+}
+
+/* Лента «Популярный» */
+.ribbon {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #ff8a00;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transform: rotate(45deg);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Заголовки карточек */
+.card h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+/* Цены */
+.price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #e52e71;
+  margin: 1rem 0;
+}
+
+/* Список особенностей */
+.features {
+  list-style: none;
+  margin: 1.5rem 0;
+}
+
+.features li {
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #eee;
+  text-align: left;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.features li:before {
+  content: "✓";
+  color: #27ae60;
+  font-weight: bold;
+  position: absolute;
+  left: -1rem;
+}
+
+.features strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Кнопки */
+.btn {
+  display: inline-block;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.buy-btn {
+  background: linear-gradient(90deg, #ff8a00, #e52e71);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.buy-btn:hover {
+  background: transparent;
+  color: #e52e71;
+  border-color: #e52e71;
+}
+
+/* Модальное окно */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.close {
+  float: right;
+  font-size: 2rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.close:hover {
+  color: #e52e71;
+}
+
+#payment-form label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+#payment-form span {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+#payment-form input,
+#payment-form select {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+  width: 100%;
+}
+
+/* Футер */
+.footer {
+  background: #2c3e50;
+  color: white;
+  text-align: center;
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+
+.footer-links {
+  margin-top: 1rem;
+}
+
+.footer-links a {
+  color: #fff;
+  margin: 0 1rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 1rem;
+}
+
+.footer-links a:hover {
+  color: #ff8a00;
+}
+
+.footer p {
+  margin-bottom: 1rem;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero h2 {
+    font-size: 2rem;
+  }
+  
+  .hero p {
+    font-size: 1.1rem;
+  }
+  
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .card {
+    padding: 1.5rem;
+  }
+  
+  .card h3 {
+    font-size: 1.8rem;
+  }
+  
+  .price {
+    font-size: 1.5rem;
+  }
+  
+  .features li {
+    font-size: 0.9rem;
+    padding: 0.4rem 0;
+  }
+  
+  .footer-links a {
+    display: block;
+    margin: 0.5rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 95%;
+  }
+  
+  .header {
+    padding: 1.5rem 0;
+  }
+  
+  .hero {
+    padding: 2rem 0;
+  }
+  
+  .card {
+    transform: scale(1);
+    padding: 1.2rem;
+  }
+  
+  .card.popular {
+    transform: scale(1);
+  }
+  
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+  
+  .buy-btn,
+  .btn-primary {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Дополнительные улучшения */
+/* Плавные переходы для всего сайта */
+* {
+  transition: all 0.3s ease;
+}
+
+/* Стили для сообщений об ошибках в форме */
+#payment-form .error {
+  color: #e52e71;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  display: none;
+}
+
+/* Фокус на полях формы */
+#payment-form input:focus,
+#payment-form select:focus {
+  outline: none;
+  border-color: #ff8a00;
+  box-shadow: 0 0 0 2px rgba(255, 138, 0, 0.2);
+}
+
+/* Анимация загрузки для кнопок */
+.btn.loading {
+  pointer-events: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Стили для успешного сообщения */
+.success-message {
+  background: rgba(39, 174, 96, 0.1);
+  color: #27ae60;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 1rem 0;
+  text-align: center;
+  border: 1px solid rgba(39, 174, 96, 0.3);
+}
