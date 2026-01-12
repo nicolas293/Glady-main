@@ -151,49 +151,32 @@
 
 
     <!-- Модальное окно профиля с редактированием -->
-    <div id="profileModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeProfileModal">&times;</span>
-            <h3>Мой профиль</h3>
-            
-            <div class="profile-view" id="profileView">
-                <div class="avatar-large">Г</div>
-                <p><strong>Ник:</strong> <span id="profileUsername">Гость</span></p>
-                <p><strong>Привилегия:</strong> <span id="profilePrivilege">Нет</span></p>
-                <p><strong>Баланс:</strong> <span id="profileBalance">0 руб.</span></p>
-                <p><strong>Email:</strong> <span id="profileEmail">Не указан</span></p>
-                <p><strong>Дата регистрации:</strong> <span id="profileRegDate">—</span></p>
-                
-                <div class="profile-actions">
-                    <button class="btn btn-primary" id="editProfileBtn">Редактировать</button>
-                    <button class="btn" id="rechargeBtn">Пополнить баланс</button>
-                    <button class="btn" id="logoutBtn">Выйти</button>
-                </div>
+    <div class="profile-edit" id="profileEdit" style="display: none;">
+        <form id="editProfileForm">
+            <label>
+                <span>Ник в игре</span>
+                <input type="text" id="editUsername" name="username" required>
+            </label>
+            <label>
+                <span>Email</span>
+                <input type="email" id="editEmail" name="email" required>
+            </label>
+            <label>
+                <span>Аватар (инициал)</span>
+                <input type="text" id="editAvatar" name="avatar" maxlength="1" required>
+            </label>
+            <!-- Поле для даты регистрации -->
+            <label>
+                <span>Дата регистрации</span>
+                <input type="text" id="editRegDate" name="regDate" readonly>
+            </label>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <button type="button" id="cancelEditBtn" class="btn">Отмена</button>
             </div>
-
-            <div class="profile-edit" id="profileEdit" style="display: none;">
-                <form id="editProfileForm">
-                    <label>
-                        <span>Ник в игре</span>
-                        <input type="text" id="editUsername" name="username" required>
-                    </label>
-                    <label>
-                        <span>Email</span>
-                        <input type="email" id="editEmail" name="email" required>
-                    </label>
-                    <label>
-                        <span>Аватар (инициал)</span>
-                        <input type="text" id="editAvatar" name="avatar" maxlength="1" required>
-                    </label>
-                    
-                    <div class="edit-actions">
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
-                        <button type="button" class="btn" id="cancelEditBtn">Отмена</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        </form>
     </div>
+
 
 
     <!-- Модальное окно правил сервера -->
