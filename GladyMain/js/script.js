@@ -278,5 +278,33 @@ function saveProfileData(data) {
     localStorage.setItem('gladyProfile', JSON.stringify(data));
 }
 if (profileRegDate) profileRegDate.textContent = profileData.regDate || '—';
+// Сохранение изменений профиля
+if (editProfileForm) {
+    editProfileForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Получаем данные из формы
+        const editRegDate = document.getElementById('editRegDate');
+
+        // Обновляем данные пользователя
+        userData.username = document.getElementById('editUsername').value.trim();
+        userData.email = document.getElementById('editEmail').value.trim();
+        userData.avatar = document.getElementById('editAvatar').value.trim().toUpperCase();
+
+        // Сохраняем дату регистрации, если она есть
+        if (editRegDate && editRegDate.value) {
+            userData.regDate = editRegDate.value;
+        }
+
+        // Сохраняем в localStorage
+        saveProfileData(userData);
+
+        // Обновляем отображение
+        updateProfileDisplay(userData);
+        showProfileView();
+
+        showSuccessMessage('Профиль успешно обновлён!');
+    });
+}
 
 
