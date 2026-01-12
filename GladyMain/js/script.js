@@ -175,14 +175,14 @@ const profileEdit = document.getElementById('profileEdit');
 const editProfileForm = document.getElementById('editProfileForm');
 
 // Данные пользователя (в реальном приложении будут загружаться с сервера)
-let userData = {
-    username: 'Гость',
-    privilege: 'Нет',
-    balance: '0 руб.',
-    email: 'Не указан',
-    regDate: '—',
-    avatar: 'Г'
-};
+// let userData = {
+//     username: 'Гость',
+//     privilege: 'Нет',
+//     balance: '0 руб.',
+//     email: 'Не указан',
+//     regDate: '—',
+//     avatar: 'Г'
+// };
 
 // Функция обновления данных профиля
 function updateProfileDisplay() {
