@@ -34,44 +34,17 @@ function closeModal() {
     paymentForm.reset();
 }
 
-// Обработчик формы оплаты
-paymentForm.addEventListener('submit', async function(event) {
-    event.preventDefault();
-
+document.getElementById('payment-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const package = document.getElementById('selected-package').textContent;
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
-    const paymentMethod = document.getElementById('payment-method').value;
-    const packageName = selectedPackage.textContent;
 
-    // Валидация данных
-    if (!validateForm(username, email, paymentMethod)) {
-        return;
-    }
-
-    // Показываем индикатор загрузки
-    showLoading();
-
-    try {
-        // Имитация отправки данных на сервер
-        const response = await simulatePayment(username, email, packageName, paymentMethod);
-
-        if (response.success) {
-            // Успешная оплата
-            showSuccessMessage(response.message);
-            setTimeout(() => {
-                closeModal();
-                resetForm();
-            }, 3000);
-        } else {
-            // Ошибка оплаты
-            showErrorMessage(response.message);
-        }
-    } catch (error) {
-        showErrorMessage('Произошла ошибка при обработке платежа. Попробуйте ещё раз.');
-    } finally {
-        hideLoading();
-    }
+    const paymentLink = `https://example.com/payment?package=${encodeURIComponent(package)}&username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}`;
+    document.getElementById('payment-link').href = paymentLink;
+    window.location.href = paymentLink; // Перенаправление
 });
+
 
 // Функция валидации формы
 function validateForm(username, email, paymentMethod) {
