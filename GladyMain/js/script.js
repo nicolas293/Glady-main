@@ -307,3 +307,107 @@ window.addEventListener('click', function(event) {
         rulesModal.style.display = 'none';
     }
 });
+
+// Функция сохранения данных профиля в localStorage
+function saveProfileData(data) {
+    localStorage.setItem('gladyProfile', JSON.stringify(data));
+}
+
+// Функция загрузки данных профиля из localStorage
+function loadProfileData() {
+    const savedData = localStorage.getItem('gladyProfile');
+    return savedData ? JSON.parse(savedData) : null;
+}
+
+// Функция обновления отображения профиля
+function updateProfileDisplay(profileData) {
+    if (!profileData) return;
+
+    document.getElementById('profileUsername').textContent = profileData.username || 'Гость';
+    document.getElementById('profileEmail').textContent = profileData.email || 'Не указан';
+    document.getElementById('editUsername').value = profileData.username || '';
+    document.getElementById('editEmail').value = profileData.email || '';
+    document.getElementById('editAvatar').value = profileData.avatar || 'Г';
+
+    // Обновляем кнопку профиля
+    const usernameElement = document.querySelector('.username');
+    if (usernameElement) {
+        usernameElement.textContent = profileData.username || 'Гость';
+    }
+
+    const avatarElement = document.querySelector('.avatar');
+    if (avatarElement) {
+        avatarElement.textContent = profileData.avatar || 'Г';
+    }
+}
+
+// Обработчик отправки формы редактирования профиля
+document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const profileData = {
+        username: document.getElementById('editUsername').value.trim(),
+        email: document.getElementById('editEmail').value.trim(),
+        avatar: document.getElementById('editAvatar').value.trim()
+    };
+
+    saveProfileData(profileData);
+    updateProfileDisplay(profileData);
+
+    // Переключаем обратно на режим просмотра
+    document.getElementById('profileView').style.display = 'block';
+    document.getElementById('profileEdit').style.display = 'none';
+});
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    const savedProfile = loadProfileData();
+    updateProfileDisplay(savedProfile);
+
+    // Обработчики для кнопок профиля
+    document.getElementById('profileBtn').addEventListener('click', function() {
+        document.getElementById('profileModal').style.display = 'block';
+    });
+
+    document.getElementById('editProfileBtn').addEventListener('click', function() {
+        document.getElementById('profileView').style.display = 'none';
+        document.getElementById('profileEdit').style.display = 'block';
+    });
+
+    document.getElementById('cancelEditBtn').addEventListener('click', function() {
+        document.getElementById('profileView').style.display = 'block';
+        document.getElementById('profileEdit').style.display = 'none';
+    });
+
+    // Закрытие модальных окон
+    document.querySelector('.close').addEventListener('click', function() {
+        this.closest('.modal').style.display = 'none';
+    });
+});
+
+function validateProfileData(data) {
+    if (!data.username || data.username.length < 2) {
+        alert('Ник должен содержать минимум 2 символа');
+        return false;
+    }
+    if (!data.email || !data.email.includes('@')) {
+        alert('Введите корректный email');
+        return false;
+    }
+    if (!data.avatar || data.avatar.length !== 1) {
+        alert('Аватар должен быть одним символом');
+        return false;
+    }
+    return true;
+}
+
+document.getElementById('logoutBtn').addEventListener('click', function() {
+    localStorage.removeItem('gladyProfile');
+    updateProfileDisplay({
+        username: 'Гость',
+        email: 'Не указан',
+        avatar: 'Г'
+    });
+    document.getElementById('profileModal').style.display = 'none';
+});
+
