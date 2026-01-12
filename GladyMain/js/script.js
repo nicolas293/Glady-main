@@ -40,7 +40,7 @@ document.getElementById('payment-form').addEventListener('submit', function(e) {
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
 
-    const paymentLink = `https://example.com/payment?package=${encodeURIComponent(package)}&username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}`;
+    const paymentLink = `https://yoomoney.ru/bill/pay/1F897L2BEEK.260112=${encodeURIComponent(package)}&username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}`;
     document.getElementById('payment-link').href = paymentLink;
     window.location.href = paymentLink; // Перенаправление
 });
