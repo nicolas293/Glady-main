@@ -122,32 +122,33 @@
 
     <!-- Модальное окно -->
     <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>Оформление покупки</h3>
-            <p>Вы выбрали: <span id="selected-package"></span></p>
-            <form id="payment-form">
-                <label>
-                    <span>Ваш ник в игре</span>
-                    <input type="text" id="username" name="username" placeholder="PlayerName" required>
-                </label>
-                <label>
-                    <span>Email для чека</span>
-                    <input type="email" id="email" name="email" placeholder="example@mail.com" required>
-                </label>
-                <label>
-                    <span>Способ оплаты</span>
-                    <select id="payment-method" name="payment-method" required>
-                        <option value="">Выберите способ</option>
-                        <option value="card">Банковская карта</option>
-                        <option value="qiwi">QMainy</option>
-                        <option value="crypto">Криптовалюта</option>
-                    </select>
-                </label>
-                <button type="submit" id="payment-link" class="btn btn-primary">Перейти к оплате</button>
-            </form>
-        </div>
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Оформление покупки</h3>
+        <p>Вы выбрали: <span id="selected-package"></span></p>
+        <form id="payment-form">
+            <label>
+                <span>Ваш ник в игре</span>
+                <input type="text" id="username" name="username" placeholder="PlayerName" required>
+            </label>
+            <label>
+                <span>Email для чека</span>
+                <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+            </label>
+
+            <!-- Блок с вариантами оплаты -->
+            <div class="payment-options">
+                <h4>Выберите способ оплаты:</h4>
+                <div class="payment-links">
+                    <a href="#" class="payment-link" data-method="card">Банковская карта</a>
+                    <a href="#" class="payment-link" data-method="qiwi">QIWI</a>
+                    <a href="#" class="payment-link" data-method="crypto">Криптовалюта</a>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
+
 
     <!-- Модальное окно профиля с редактированием -->
     <div id="profileModal" class="modal">
