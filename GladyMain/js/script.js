@@ -318,3 +318,39 @@ window.addEventListener('click', function(event) {
         rulesModal.style.display = 'none';
     }
 });
+
+// Получаем элементы DOM
+const modal = document.getElementById('rulesModal');
+const closeBtn = document.getElementById('closeRulesModal');
+
+// Функция открытия модального окна
+function openModal() {
+    modal.style.display = 'block';
+}
+
+// Функция закрытия модального окна
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+// Обработчик клика по крестику закрытия
+closeBtn.addEventListener('click', closeModal);
+
+// Обработчик клика вне модального окна для его закрытия
+window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+
+// Пример: добавляем кнопку для открытия модального окна (можно разместить где угодно на странице)
+const openButton = document.createElement('button');
+openButton.textContent = 'Открыть правила сервера';
+openButton.style.padding = '10px 20px';
+openButton.style.backgroundColor = '#007bff';
+openButton.style.color = 'white';
+openButton.style.border = 'none';
+openButton.style.borderRadius = '5px';
+openButton.style.cursor = 'pointer';
+openButton.addEventListener('click', openModal);
+document.body.appendChild(openButton);
