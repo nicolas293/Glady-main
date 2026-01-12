@@ -163,6 +163,37 @@ function showNotification(message, type) {
     }, 5000);
 }
 
+// Функция загрузки данных профиля из localStorage
+function loadProfileData() {
+    try {
+        const saved = localStorage.getItem('gladyProfile');
+        if (saved) {
+            const data = JSON.parse(saved);
+            // Гарантируем наличие даты регистрации
+            if (!data.regDate) {
+                data.regDate = formatDate(new Date());
+                saveProfileData(data);
+            }
+            return data;
+        }
+        return null;
+    } catch (error) {
+        console.error('Ошибка загрузки профиля:', error);
+        return null;
+    }
+}
+
+// Функция сохранения данных профиля в localStorage
+function saveProfileData(data) {
+    // Устанавливаем дату регистрации только если её ещё нет (для новых пользователей)
+    if (!data.regDate) {
+        data.regDate = formatDate(new Date());
+    }
+    localStorage.setItem('gladyProfile', JSON.stringify(data));
+}
+
+
+
 // Элементы DOM для профиля
 const profileBtn = document.getElementById('profileBtn');
 const profileModal = document.getElementById('profileModal');
