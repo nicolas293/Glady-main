@@ -34,19 +34,38 @@ function closeModal() {
     paymentForm.reset();
 }
 
-document.getElementById('payment-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const package = document.getElementById('selected-package').textContent;
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
+// Базовые URL для разных способов оплаты
+const paymentUrls = {
+    card: 'https://yoomoney.ru/bill/pay/1F897L2BEEK.260112',
+    qiwi: 'https://qiwi.com/payment/form/99',
+    crypto: 'https://crypto-gateway.com/pay'
+};
 
-    const paymentLink = `https://yoomoney.ru/bill/pay/1F897L2BEEK.260112=${encodeURIComponent(package)}&username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}`;
-    document.getElementById('payment-link').href = paymentLink;
-    window.location.href = paymentLink; // Перенаправление
+// Обработчик кликов по ссылкам оплаты
+document.querySelectorAll('.payment-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const method = this.getAttribute('data-method');
+        const packageName = document.getElementById('selected-package').textContent;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+
+        // Валидация формы перед генерацией ссылки
+        if (!validateForm(username, email, method)) {
+            return;
+        }
+
+        // Генерируем ссылку с параметрами
+        const baseUrl = paymentUrls[method];
+        const paymentLink = `${baseUrl}?package=${encodeURIComponent(packageName)}&username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}`;
+
+        // Открываем в новой вкладке
+        window.open(paymentLink, '_blank');
+    });
 });
 
-
-// Функция валидации формы
+// Обновлённая функция валидации формы
 function validateForm(username, email, paymentMethod) {
     let isValid = true;
     let errorMessage = '';
@@ -56,9 +75,6 @@ function validateForm(username, email, paymentMethod) {
         isValid = false;
     } else if (!isValidEmail(email)) {
         errorMessage = 'Введите корректный email-адрес.';
-        isValid = false;
-    } else if (!paymentMethod) {
-        errorMessage = 'Выберите способ оплаты.';
         isValid = false;
     }
 
