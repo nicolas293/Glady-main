@@ -1,4 +1,4 @@
-добавь дату регистрацию в профиль? // Получаем элементы DOM (с проверкой существования)
+// Получаем элементы DOM (с проверкой существования)
 const modal = document.getElementById('modal');
 const closeBtn = document.querySelector('.close');
 const buyButtons = document.querySelectorAll('.buy-btn');
