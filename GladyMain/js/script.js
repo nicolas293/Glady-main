@@ -36,7 +36,7 @@ function closeModal() {
 
 // Базовые URL для разных способов оплаты
 const paymentUrls = {
-    card: 'https://yoomoney.ru/bill/pay/1F897L2BEEK.260112',
+    card: 'https://yoomoney.ru/bill/pay/1F897L2BEEK.2601122',
     qiwi: 'https://qiwi.com/payment/form/99',
     crypto: 'https://crypto-gateway.com/pay'
 };
