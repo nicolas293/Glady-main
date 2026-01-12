@@ -5,6 +5,70 @@ const buyButtons = document.querySelectorAll('.buy-btn');
 const selectedPackage = document.getElementById('selected-package');
 const paymentForm = document.getElementById('payment-form');
 
+// Элементы DOM для профиля
+const profileBtn = document.getElementById('profileBtn');
+const profileModal = document.getElementById('profileModal');
+const closeProfileModal = document.getElementById('closeProfileModal');
+const editProfileBtn = document.getElementById('editProfileBtn');
+const cancelEditBtn = document.getElementById('cancelEditBtn');
+const rechargeBtn = document.getElementById('rechargeBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const profileView = document.getElementById('profileView');
+const profileEdit = document.getElementById('profileEdit');
+const editProfileForm = document.getElementById('editProfileForm');
+
+// Функция форматирования даты в формат ДД.ММ.ГГГГ
+function formatDate(date) {
+    if (!(date instanceof Date)) {
+        return '—';
+    }
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Месяц +1, т.к. отсчёт с 0
+    const year = date.getFullYear();
+
+    return `${day}.${month}.${year}`;
+}
+
+// Функция загрузки данных профиля из localStorage
+function loadProfileData() {
+    try {
+        const saved = localStorage.getItem('gladyProfile');
+        if (saved) {
+            const data = JSON.parse(saved);
+            // Гарантируем наличие даты регистрации
+            if (!data.regDate) {
+                data.regDate = formatDate(new Date());
+                saveProfileData(data);
+            }
+            return data;
+        }
+        return null;
+    } catch (error) {
+        console.error('Ошибка загрузки профиля:', error);
+        return null;
+    }
+}
+
+// Функция сохранения данных профиля в localStorage
+function saveProfileData(data) {
+    // Устанавливаем дату регистрации только если её ещё нет (для новых пользователей)
+    if (!data.regDate) {
+        data.regDate = formatDate(new Date());
+    }
+    localStorage.setItem('gladyProfile', JSON.stringify(data));
+}
+
+// Данные пользователя
+let userData = loadProfileData() || {
+    username: 'Гость',
+    privilege: 'Нет',
+    balance: '0 руб.',
+    email: 'Не указан',
+    regDate: formatDate(new Date()), // Текущая дата при создании нового профиля
+    avatar: 'Г'
+};
+
 // Функция закрытия модального окна
 function closeModal() {
     if (modal) {
@@ -162,27 +226,16 @@ function showNotification(message, type) {
     }, 5000);
 }
 
-// Элементы DOM для профиля
-const profileBtn = document.getElementById('profileBtn');
-const profileModal = document.getElementById('profileModal');
-const closeProfileModal = document.getElementById('closeProfileModal');
-const editProfileBtn = document.getElementById('editProfileBtn');
-const cancelEditBtn = document.getElementById('cancelEditBtn');
-const rechargeBtn = document.getElementById('rechargeBtn');
-const logoutBtn = document.getElementById('logoutBtn');
-const profileView = document.getElementById('profileView');
-const profileEdit = document.getElementById('profileEdit');
-const editProfileForm = document.getElementById('editProfileForm');
+// Функции переключения режимов профиля
+function showProfileEdit() {
+    if (profileView) profileView.style.display = 'none';
+    if (profileEdit) profileEdit.style.display = 'block';
+}
 
-// Данные пользователя
-let userData = loadProfileData() || {
-    username: 'Гость',
-    privilege: 'Нет',
-    balance: '0 руб.',
-    email: 'Не указан',
-    regDate: '—',
-    avatar: 'Г'
-};
+function showProfileView() {
+    if (profileEdit) profileEdit.style.display = 'none';
+    if (profileView) profileView.style.display = 'block';
+}
 
 // Функция обновления данных профиля
 function updateProfileDisplay(profileData = userData) {
@@ -195,20 +248,45 @@ function updateProfileDisplay(profileData = userData) {
     const avatarLarge = document.querySelector('.avatar-large');
     const usernameElement = document.querySelector('.username');
 
-    if (profileUsername) profileUsername.textContent = profileData.username || 'Гость';
-    if (profilePrivilege) profilePrivilege.textContent = profileData.privilege || 'Нет';
-    if (profileBalance) profileBalance.textContent = profileData.balance || '0 руб.';
-    if (profileEmail) profileEmail.textContent = profileData.email || 'Не указан';
-    if (profileRegDate) profileRegDate.textContent = profileData.regDate || '—';
+    // Обновляем ник в профиле
+    if (profileUsername) {
+        profileUsername.textContent = profileData.username || 'Гость';
+    }
+
+    // Обновляем привилегию
+    if (profilePrivilege) {
+        profilePrivilege.textContent = profileData.privilege || 'Нет';
+    }
+
+    // Обновляем баланс
+    if (profileBalance) {
+        profileBalance.textContent = profileData.balance || '0 руб.';
+    }
+
+    // Обновляем email
+    if (profileEmail) {
+        profileEmail.textContent = profileData.email || 'Не указан';
+    }
+
+    // Обновляем дату регистрации
+    if (profileRegDate) {
+        profileRegDate.textContent = profileData.regDate || '—';
+    }
 
     // Обновляем аватар в шапке и в профиле
     avatarElements.forEach(el => {
         if (el) el.textContent = profileData.avatar || 'Г';
     });
-    if (avatarLarge) avatarLarge.textContent = profileData.avatar || 'Г';
 
-    // Обновляем ник в шапке
-    if (usernameElement) usernameElement.textContent = profileData.username || 'Гость';
+    // Обновляем большой аватар в модальном окне
+    if (avatarLarge) {
+        avatarLarge.textContent = profileData.avatar || 'Г';
+    }
+
+    // Обновляем ник в шапке страницы
+    if (usernameElement) {
+        usernameElement.textContent = profileData.username || 'Гость';
+    }
 }
 
 // Открытие модального окна профиля
@@ -236,23 +314,86 @@ if (editProfileBtn) {
         const editUsername = document.getElementById('editUsername');
         const editEmail = document.getElementById('editEmail');
         const editAvatar = document.getElementById('editAvatar');
+        const editRegDate = document.getElementById('editRegDate');
 
-        if (editUsername) {
-            editUsername.value = userData.username || '';
-        } else {
-            console.warn('Элемент #editUsername не найден в DOM');
-        }
-
-        if (editEmail) {
-            editEmail.value = userData.email || '';
-        } else {
-            console.warn('Элемент #editEmail не найден в DOM');
-        }
-
-        if (editAvatar) {
-            editAvatar.value = userData.avatar || 'Г';
-        } else {
-            console.warn('Элемент #editAvatar не найден в DOM');
-        }
+        if (editUsername) editUsername.value = userData.username || '';
+        if (editEmail) editEmail.value = userData.email || '';
+        if (editAvatar) editAvatar.value = userData.avatar || 'Г';
+        if (editRegDate) editRegDate.value = userData.regDate || formatDate(new Date());
     });
 }
+
+// Обработчик кнопки «Отмена» в форме редактирования
+if (cancelEditBtn) {
+    cancelEditBtn.addEventListener('click', function() {
+        showProfileView();
+    });
+}
+
+// Сохранение изменений профиля
+if (editProfileForm) {
+    editProfileForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Получаем данные из формы
+        const editRegDate = document.getElementById('editRegDate');
+
+        // Обновляем данные пользователя
+        userData.username = document.getElementById('editUsername').value.trim();
+        userData.email = document.getElementById('editEmail').value.trim();
+        userData.avatar = document.getElementById('editAvatar').value.trim().toUpperCase();
+
+        // Сохраняем дату регистрации, если она есть (не даём пользователю её менять)
+        if (editRegDate && editRegDate.value) {
+            userData.regDate = editRegDate.value;
+        }
+
+        // Сохраняем в localStorage
+        saveProfileData(userData);
+
+        // Обновляем отображение
+        updateProfileDisplay(userData);
+        showProfileView();
+
+        showSuccessMessage('Профиль успешно обновлён!');
+    });
+}
+
+// Кнопка пополнения баланса (заглушка)
+if (rechargeBtn) {
+    rechargeBtn.addEventListener('click', function() {
+        showErrorMessage('Функция пополнения баланса в разработке');
+    });
+}
+
+// Кнопка выхода
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', function() {
+        // Сбрасываем данные пользователя до гостевого состояния
+        userData = {
+            username: 'Гость',
+            privilege: 'Нет',
+            balance: '0 руб.',
+            email: 'Не указан',
+            regDate: formatDate(new Date()),
+            avatar: 'Г'
+        };
+
+        // Сохраняем изменения
+        saveProfileData(userData);
+
+        // Обновляем отображение
+        updateProfileDisplay();
+
+        // Закрываем модальное окно
+        if (profileModal) profileModal.style.display = 'none';
+
+        showSuccessMessage('Вы вышли из аккаунта');
+    });
+}
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    // Обновляем отображение профиля при загрузке страницы
+    updateProfileDisplay();
+});
