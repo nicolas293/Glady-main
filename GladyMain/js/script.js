@@ -1,3 +1,4 @@
+
 // Получаем элементы DOM (с проверкой существования)
 const modal = document.getElementById('modal');
 const closeBtn = document.querySelector('.close');
