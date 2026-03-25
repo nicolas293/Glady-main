@@ -1,0 +1,336 @@
+/* Основные стили */
+:root {
+    --primary-color: #4a6fa5;
+    --secondary-color: #166088;
+    --accent-color: #4fc3f7;
+    --dark-color: #1a1a2e;
+    --light-color: #f8f9fa;
+    --success-color: #2ecc71;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #800080(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    color: #800080;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+header {
+    background: linear-gradient(135deg, #800080, var(--secondary-color));
+    color: #FFA500;
+    text-align: center;
+    padding: 2rem 1rem;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: #800080;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.container {
+    max-width: 1000px;
+    margin: -50px auto 2rem;
+    padding: 2rem;
+    background: #4B0082;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 1;
+}
+
+/* Стили для привилегий */
+.privileges {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.privilege {
+    background: #BA55D3;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border-top: 4px solid var(--accent-color);
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+}
+
+.privilege:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.privilege::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+}
+
+.privilege h3 {
+    text-align: center;
+    color: #800080;
+    font-size: 1.5rem;
+}
+
+.privilege .price {
+    text-align: center;
+}
+
+.privilege ul {
+    list-style: none ;
+}
+
+.privilege li { 
+    list-style: none;  
+}
+
+.privilege li::before {
+    text-align: center;
+}
+
+/* Стили для формы оплаты */
+.payment-form {
+    background: var(--light-color);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.payment-form h2 {
+    color: var(--secondary-color);
+    margin-top: 0;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: #800080;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.form-group select,
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-group select:focus,
+.form-group input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Анимация для кнопки */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.btn:active {
+    animation: pulse 0.5s;
+}/* Стили для футера */
+footer {
+    background: var(--dark-color);
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+footer a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        margin: -30px auto 1rem;
+        padding: 1.5rem;
+    }
+
+    header {
+        padding: 1.5rem 1rem;
+    }
+
+    .privileges {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Дополнительные эффекты */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.privilege:nth-child(2) {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+.privilege:nth-child(3) {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+/* Подсветка для активных элементов */
+.privilege.active {
+    border-top-color: var(--success-color);
+    box-shadow: 0 0 0 2px var(--success-color);
+}
+
+.privilege.active h3 {
+    color: var(--success-color);
+}
+/* Стили для блока профиля */
+.user-profile {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 100;
+}
+
+.user-authenticated,
+.user-guest {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.user-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-color);
+}
+
+.user-nickname {
+    color: white;
+    font-weight: 600;
+}
+
+.user-menu {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-profile,
+.btn-logout,
+.btn-login,
+.btn-register {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-profile {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.btn-profile:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.btn-logout {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-logout:hover {
+    background: #c0392b;
+}
+
+.btn-login {
+    background: var(--accent-color);
+    color: white;
+}
+
+.btn-login:hover {
+    background: #3daee9;
+}
+
+.btn-register {
+    background: var(--success-color);
+    color: white;
+}
+
+.btn-register:hover {
+    background: #27ae60;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    .user-profile {
+        flex-direction: column;
+        position: static;
+        margin-top: 1rem;
+    }
+}
